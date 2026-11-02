@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manager</title>
+<style>
+:root{--bg:#f6f3ee;--ink:#1d1b16;--ink-2:#6b665c;--line:#e2ddd3;--accent:#c4561f;--surface:#fff;--err:#b3392f}
+@media (prefers-color-scheme:dark){:root{--bg:#16140f;--ink:#ece7dd;--ink-2:#9a9387;--line:#332e25;--accent:#e07a3f;--surface:#1f1c16;--err:#e2776c}}
+body{margin:0;min-height:100dvh;display:grid;place-items:center;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,sans-serif;padding:16px}
+form{width:100%;max-width:340px;display:flex;flex-direction:column;gap:10px}
+h1{font-size:20px;margin:0}p{color:var(--ink-2);margin:0 0 6px}
+input{font:inherit;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+button{font:inherit;padding:10px;border:0;border-radius:10px;background:var(--accent);color:#fff;font-weight:600;cursor:pointer}
+button:disabled{opacity:.5}#err{color:var(--err);min-height:1.5em;margin:0}
+</style></head><body>
+<form id="f">
+<h1>Manager</h1><p>Entre com a senha do seu usuário do PC ou com o token (<code>manager token</code>).</p>
+<input name="s" type="password" autocomplete="current-password" placeholder="senha ou token" autofocus>
+<button>Entrar</button><p id="err"></p></form>
+<script>
+f.onsubmit = async (e) => {
+  e.preventDefault();
+  const b = f.querySelector("button"); b.disabled = true; err.textContent = "";
+  const r = await fetch("/login", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ secret: f.s.value }) }).catch(() => null);
+  if (r?.ok) return location.replace("/" + location.search);
+  err.textContent = r ? (await r.json().catch(() => ({}))).error || "falhou" : "sem conexão";
+  b.disabled = false; f.s.select();
+};
+</script></body></html>

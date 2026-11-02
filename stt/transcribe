@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Transcreve arquivos de áudio pela GPU: transcribe arquivo.ogg [outro.opus ...]
+for f in "$@"; do
+  echo "## $f"
+  curl -sS --data-binary @"$f" http://127.0.0.1:7778/transcribe
+  echo
+done

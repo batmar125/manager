@@ -1,0 +1,16 @@
+# Copie para ~/.config/systemd/user/manager.service e ajuste os caminhos.
+[Unit]
+Description=Manager — UI web do Claude Code
+After=network-online.target
+
+[Service]
+WorkingDirectory=%h/manager
+ExecStart=/usr/bin/env node %h/manager/server.mjs
+Environment=PATH=%h/.local/bin:/usr/local/bin:/usr/bin:/bin
+# Environment=MANAGER_PORT=7777
+# Environment=MANAGER_HTTPS_URL=https://minha-maquina.tailnet.ts.net:8443
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target

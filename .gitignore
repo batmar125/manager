@@ -1,0 +1,8 @@
+node_modules/
+state/
+workspace/
+stt/.venv/
+__pycache__/
+*.log
+.env
+CLAUDE.md

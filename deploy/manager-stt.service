@@ -1,0 +1,11 @@
+# Opcional: transcrição de voz local (faster-whisper na GPU).
+[Unit]
+Description=Manager — transcrição de áudio (faster-whisper)
+
+[Service]
+ExecStart=%h/manager/stt/run.sh
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target
